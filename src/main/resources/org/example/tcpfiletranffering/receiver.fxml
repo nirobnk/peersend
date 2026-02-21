@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.tcpfiletranffering.UIcontrollers.ControllerReceiver">
+   <children>
+      <Label layoutX="42.0" layoutY="59.0" text="Receiver">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Button fx:id="buttonSaveLocation" layoutX="42.0" layoutY="108.0" mnemonicParsing="false" text="Saving Location" />
+      <Label fx:id="selectedLocation" layoutX="204.0" layoutY="112.0" maxWidth="-Infinity" text="location" wrapText="true" />
+      <Button fx:id="buttonStartConnection" layoutX="225.0" layoutY="251.0" mnemonicParsing="false" onAction="#startConnection" prefHeight="59.0" prefWidth="150.0" text="StartConnection" />
+      <Button layoutX="16.0" layoutY="14.0" mnemonicParsing="false" onAction="#goBack" text="&lt;&lt;" />
+      <Label fx:id="receivedStatus" alignment="CENTER" layoutX="1.0" layoutY="330.0" prefHeight="18.0" prefWidth="600.0" text="status" />
+      <Label layoutX="102.0" layoutY="176.0" text="Save as :" />
+      <TextField fx:id="savingName" layoutX="196.0" layoutY="172.0" />
+   </children>
+</AnchorPane>
