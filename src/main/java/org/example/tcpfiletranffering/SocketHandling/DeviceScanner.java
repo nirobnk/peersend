@@ -1,5 +1,7 @@
 package org.example.tcpfiletranffering.SocketHandling;
 
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import java.net.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -8,7 +10,9 @@ import java.util.concurrent.*;
 public class DeviceScanner {
     
     private static final int PORT = 5001;
-    private static final int TIMEOUT = 200; // milliseconds
+    private static final int TIMEOUT = 500; // milliseconds
+    private static final String SCAN_REQUEST = "PEERSEND_SCAN";
+    private static final String SCAN_RESPONSE = "PEERSEND_RECEIVER";
     
     public static class Device {
         private String ipAddress;
@@ -62,16 +66,29 @@ public class DeviceScanner {
                     try {
                         InetAddress address = InetAddress.getByName(host);
                         
-                        // Check if host is reachable
-                        if (address.isReachable(TIMEOUT)) {
-                            // Try to connect to port 5001
-                            try (Socket socket = new Socket()) {
-                                socket.connect(new InetSocketAddress(host, PORT), TIMEOUT);
+                        // Try to connect to port 5001 and verify it's a PeerSend receiver
+                        try (Socket socket = new Socket()) {
+                            socket.connect(new InetSocketAddress(host, PORT), TIMEOUT);
+                            socket.setSoTimeout(TIMEOUT);
+                            
+                            DataOutputStream out = new DataOutputStream(socket.getOutputStream());
+                            DataInputStream in = new DataInputStream(socket.getInputStream());
+                            
+                            // Send scan request
+                            out.writeUTF(SCAN_REQUEST);
+                            out.flush();
+                            
+                            // Wait for response
+                            String response = in.readUTF();
+                            
+                            if (SCAN_RESPONSE.equals(response)) {
                                 String hostname = address.getHostName();
+                                System.out.println("Found PeerSend device: " + host + " (" + hostname + ")");
                                 return new Device(host, hostname);
-                            } catch (Exception e) {
-                                // Port not open, skip
                             }
+                            
+                        } catch (Exception e) {
+                            // Not a PeerSend receiver or connection failed
                         }
                     } catch (Exception e) {
                         // Host not reachable, skip
@@ -85,7 +102,7 @@ public class DeviceScanner {
             // Collect results
             for (Future<Device> future : futures) {
                 try {
-                    Device device = future.get(TIMEOUT * 2, TimeUnit.MILLISECONDS);
+                    Device device = future.get(1, TimeUnit.SECONDS);
                     if (device != null) {
                         availableDevices.add(device);
                         System.out.println("Found device: " + device);
@@ -98,6 +115,11 @@ public class DeviceScanner {
             }
             
             executor.shutdown();
+            try {
+                executor.awaitTermination(2, TimeUnit.SECONDS);
+            } catch (InterruptedException e) {
+                executor.shutdownNow();
+            };
             
         } catch (Exception e) {
             e.printStackTrace();

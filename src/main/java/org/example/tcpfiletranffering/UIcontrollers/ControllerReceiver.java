@@ -1,5 +1,7 @@
 package org.example.tcpfiletranffering.UIcontrollers;
 
+import javafx.application.Platform;
+import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -25,7 +27,7 @@ public class ControllerReceiver implements Initializable {
     private Stage stage;
     private Scene scene;
 
-    private String filePath;
+    private String directoryPath;
 
 
     @FXML
@@ -33,9 +35,6 @@ public class ControllerReceiver implements Initializable {
 
     @FXML
     private Label selectedLocation,receivedStatus;
-
-    @FXML
-    private TextField savingName;
 
 
     @Override
@@ -75,22 +74,33 @@ public class ControllerReceiver implements Initializable {
             receivedStatus.setText("❌ Please select a destination folder.");
             return;
         }
-        if(savingName.getText().isEmpty()){
-            receivedStatus.setText("❌ Please enter a file name.");
-            return;
-        }
 
-        filePath = selectedLocation.getText() + savingName.getText();
-        System.out.println("Full file path: " + filePath);
+        directoryPath = selectedLocation.getText();
+        System.out.println("Directory path: " + directoryPath);
 
-        try{
-           receivedStatus.setText("⏳ Waiting for incoming file connection...");
-           FTreceiver.handleReceive(5001,filePath);
-           receivedStatus.setText("✅ File received successfully at: " + filePath);
-        } catch (Exception e){
-            e.printStackTrace();
-            receivedStatus.setText("❌ Error receiving file: " + e.getMessage());
-        }
+        // Run receiver in background thread to prevent UI freezing
+        Task<Void> receiverTask = new Task<Void>() {
+            @Override
+            protected Void call() throws Exception {
+                FTreceiver.handleReceive(5001, directoryPath);
+                return null;
+            }
+        };
+
+        receiverTask.setOnSucceeded(e -> {
+            receivedStatus.setText("✅ File received successfully!");
+        });
+
+        receiverTask.setOnFailed(e -> {
+            Throwable exception = receiverTask.getException();
+            exception.printStackTrace();
+            receivedStatus.setText("❌ Error receiving file: " + exception.getMessage());
+        });
+
+        receivedStatus.setText("⏳ Waiting for incoming file connection...");
+        Thread receiverThread = new Thread(receiverTask);
+        receiverThread.setDaemon(true);
+        receiverThread.start();
     }
 
 

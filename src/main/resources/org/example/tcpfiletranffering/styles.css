@@ -190,23 +190,55 @@
   -fx-border-color: #e0e0e0;
   -fx-border-width: 1;
   -fx-border-radius: 10;
+  -fx-padding: 5;
 }
 
 .custom-list .list-cell {
   -fx-background-color: transparent;
   -fx-text-fill: #333333;
   -fx-padding: 8 12 8 12;
+  -fx-font-size: 13px;
 }
 
-.custom-list .list-cell:selected {
+.custom-list .list-cell:filled:selected {
   -fx-background-color: #667eea;
   -fx-text-fill: white;
+  -fx-background-radius: 5;
 }
 
-.custom-list .list-cell:hover {
+.custom-list .list-cell:filled:hover {
   -fx-background-color: #f0f0f0;
+  -fx-cursor: hand;
+  -fx-background-radius: 5;
 }
 
-.custom-list .list-cell:selected:hover {
+.custom-list .list-cell:filled:selected:hover {
   -fx-background-color: #5568d3;
+  -fx-background-radius: 5;
+}
+
+.custom-list .virtual-flow .scroll-bar {
+  -fx-background-color: transparent;
+}
+
+.custom-list .virtual-flow .scroll-bar .thumb {
+  -fx-background-color: #cccccc;
+  -fx-background-radius: 5;
+}
+
+/* Progress Bar Style */
+.custom-progress-bar {
+  -fx-pref-height: 20px;
+  -fx-background-radius: 10;
+}
+
+.custom-progress-bar .track {
+  -fx-background-color: #e0e0e0;
+  -fx-background-radius: 10;
+}
+
+.custom-progress-bar .bar {
+  -fx-background-color: linear-gradient(to right, #667eea, #764ba2);
+  -fx-background-radius: 10;
+  -fx-background-insets: 0;
 }

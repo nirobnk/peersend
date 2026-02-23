@@ -1,5 +1,7 @@
 package org.example.tcpfiletranffering.UIcontrollers;
 
+import javafx.application.Platform;
+import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -9,6 +11,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ProgressBar;
 import javafx.scene.control.TextField;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -32,6 +35,8 @@ public class ControllerSender implements Initializable {
     private Button selectFileButton,fileSendButton;
     @FXML
     private Label selectedFile,sendingStatus;
+    @FXML
+    private ProgressBar sendProgress;
 
     private String ip;
     private String filePath;
@@ -45,6 +50,12 @@ public class ControllerSender implements Initializable {
         selectedFile.setMaxWidth(400);
         selectedFile.setWrapText(true);
         sendingStatus.setText(""); // Initialize status as empty
+        
+        // Hide progress bar initially
+        if (sendProgress != null) {
+            sendProgress.setVisible(false);
+            sendProgress.setProgress(0);
+        }
     }
 
     public void chooseFile(ActionEvent event) {
@@ -84,16 +95,69 @@ public class ControllerSender implements Initializable {
             return;
         }
 
-        try{
-            sendingStatus.setText("📤 Sending file...");
-            System.out.println("Connecting to: " + ip + ":5001");
-            FTsender.handleSend(ip,5001,filePath);
-            sendingStatus.setText("✅ File sent successfully!");
-        }catch (Exception e){
-            e.printStackTrace();
-            sendingStatus.setText("❌ Failed to send the file: " + e.getMessage());
+        // Show progress bar
+        if (sendProgress != null) {
+            sendProgress.setVisible(true);
+            sendProgress.setProgress(0);
         }
+        
+        fileSendButton.setDisable(true);
+        sendingStatus.setText("📤 Sending file...");
+        
+        // Send file in background thread
+        Task<Void> sendTask = new Task<Void>() {
+            @Override
+            protected Void call() throws Exception {
+                FTsender.handleSend(ip, 5001, filePath, new FTsender.ProgressCallback() {
+                    @Override
+                    public void onProgress(long bytesTransferred, long totalBytes) {
+                        double progress = (double) bytesTransferred / totalBytes;
+                        Platform.runLater(() -> {
+                            if (sendProgress != null) {
+                                sendProgress.setProgress(progress);
+                            }
+                            long percentComplete = Math.round(progress * 100);
+                            sendingStatus.setText("📤 Sending: " + percentComplete + "%");
+                        });
+                    }
 
+                    @Override
+                    public void onComplete() {
+                        Platform.runLater(() -> {
+                            if (sendProgress != null) {
+                                sendProgress.setProgress(1.0);
+                            }
+                            sendingStatus.setText("✅ File sent successfully!");
+                            fileSendButton.setDisable(false);
+                        });
+                    }
+
+                    @Override
+                    public void onError(Exception e) {
+                        Platform.runLater(() -> {
+                            if (sendProgress != null) {
+                                sendProgress.setVisible(false);
+                            }
+                            sendingStatus.setText("❌ Failed to send: " + e.getMessage());
+                            fileSendButton.setDisable(false);
+                        });
+                    }
+                });
+                return null;
+            }
+        };
+        
+        sendTask.setOnFailed(e -> {
+            if (sendProgress != null) {
+                sendProgress.setVisible(false);
+            }
+            sendingStatus.setText("❌ Failed to send the file.");
+            fileSendButton.setDisable(false);
+        });
+        
+        Thread sendThread = new Thread(sendTask);
+        sendThread.setDaemon(true);
+        sendThread.start();
     }
 
 
