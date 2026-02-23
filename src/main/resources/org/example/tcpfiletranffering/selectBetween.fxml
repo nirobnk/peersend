@@ -19,7 +19,7 @@
             <Font size="16.0" />
          </font>
       </Label>
-      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="50.0">
+      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="30.0">
          <children>
             <VBox alignment="CENTER" spacing="15.0">
                <children>
@@ -28,10 +28,33 @@
                         <Font size="48.0" />
                      </font>
                   </Label>
-                  <Button fx:id="selectSender" mnemonicParsing="false" onAction="#goToSender" prefWidth="180.0" styleClass="action-button" text="Send File" />
-                  <Label styleClass="subtitle" text="Share a file" textAlignment="CENTER">
+                  <Button fx:id="selectSender" mnemonicParsing="false" onAction="#goToSender" prefWidth="160.0" styleClass="action-button" text="Send File">
                      <font>
-                        <Font size="12.0" />
+                        <Font size="14.0" />
+                     </font>
+                  </Button>
+                  <Label styleClass="subtitle" text="Manual IP" textAlignment="CENTER">
+                     <font>
+                        <Font size="11.0" />
+                     </font>
+                  </Label>
+               </children>
+            </VBox>
+            <VBox alignment="CENTER" spacing="15.0">
+               <children>
+                  <Label styleClass="subtitle" text="🔍">
+                     <font>
+                        <Font size="48.0" />
+                     </font>
+                  </Label>
+                  <Button fx:id="selectSenderWithScanner" mnemonicParsing="false" onAction="#goToSenderWithScanner" prefWidth="160.0" styleClass="action-button" text="Send (Auto)">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Button>
+                  <Label styleClass="subtitle" text="Scan devices" textAlignment="CENTER">
+                     <font>
+                        <Font size="11.0" />
                      </font>
                   </Label>
                </children>
@@ -43,10 +66,14 @@
                         <Font size="48.0" />
                      </font>
                   </Label>
-                  <Button fx:id="selectReceiver" mnemonicParsing="false" onAction="#goToReceiver" prefWidth="180.0" styleClass="action-button" text="Receive File" />
+                  <Button fx:id="selectReceiver" mnemonicParsing="false" onAction="#goToReceiver" prefWidth="160.0" styleClass="action-button" text="Receive File">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Button>
                   <Label styleClass="subtitle" text="Accept a file" textAlignment="CENTER">
                      <font>
-                        <Font size="12.0" />
+                        <Font size="11.0" />
                      </font>
                   </Label>
                </children>

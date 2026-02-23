@@ -17,6 +17,8 @@ public class ControllerSelect {
     @FXML
     Button selectSender;
     @FXML
+    Button selectSenderWithScanner;
+    @FXML
     Button selectReceiver;
 
     private Parent root;
@@ -25,6 +27,15 @@ public class ControllerSelect {
 
     public void goToSender(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(Main.class.getResource("sender.fxml"));
+        root = loader.load();
+        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    public void goToSenderWithScanner(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(Main.class.getResource("senderWithScanner.fxml"));
         root = loader.load();
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(root);

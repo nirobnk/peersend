@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.ProgressIndicator?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox prefHeight="650.0" prefWidth="700.0" styleClass="root" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.tcpfiletranffering.UIcontrollers.ControllerSenderWithScanner">
+   <children>
+      <HBox alignment="CENTER_LEFT" spacing="10.0">
+         <children>
+            <Button mnemonicParsing="false" onAction="#goBack" styleClass="small-button" text="← Back" />
+            <Label fx:id="localIpLabel" styleClass="subtitle" text="Your IP: Loading...">
+               <font>
+                  <Font size="12.0" />
+               </font>
+            </Label>
+         </children>
+         <padding>
+            <Insets bottom="10.0" left="20.0" right="20.0" top="20.0" />
+         </padding>
+      </HBox>
+      <VBox alignment="CENTER" spacing="30.0" VBox.vgrow="ALWAYS">
+         <children>
+            <Label styleClass="title" text="📤 Send File">
+               <font>
+                  <Font name="System Bold" size="32.0" />
+               </font>
+            </Label>
+            <VBox alignment="CENTER" maxWidth="550.0" spacing="25.0" styleClass="card">
+               <children>
+                  <VBox spacing="10.0">
+                     <children>
+                        <HBox alignment="CENTER_LEFT" spacing="10.0">
+                           <children>
+                              <Label styleClass="header-label" text="Available Devices">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Label>
+                              <Button fx:id="scanButton" mnemonicParsing="false" onAction="#scanForDevices" styleClass="choose-button" text="🔍 Scan Network" />
+                              <ProgressIndicator fx:id="scanProgress" prefHeight="25.0" prefWidth="25.0" />
+                           </children>
+                        </HBox>
+                        <ListView fx:id="deviceListView" prefHeight="100.0" styleClass="custom-list" />
+                        <Label styleClass="info-label" text="💡 Click 'Scan Network' to find devices automatically" textFill="#666666" wrapText="true">
+                           <font>
+                              <Font size="11.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </VBox>
+                  <VBox spacing="10.0">
+                     <children>
+                        <Label styleClass="header-label" text="Or Enter IP Address Manually">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="receiverIP" promptText="e.g., 192.168.1.100 or localhost" styleClass="custom-text-field" />
+                        <Label styleClass="info-label" text="💡 Tip: The receiver should be on the same network" textFill="#666666" wrapText="true">
+                           <font>
+                              <Font size="11.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </VBox>
+                  <VBox spacing="10.0">
+                     <children>
+                        <Label styleClass="header-label" text="Select File">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                        </Label>
+                        <HBox alignment="CENTER_LEFT" spacing="15.0">
+                           <children>
+                              <Button fx:id="selectFileButton" mnemonicParsing="false" styleClass="choose-button" text="Choose File" />
+                              <Label fx:id="selectedFile" maxWidth="300.0" styleClass="info-label" text="No file selected" textFill="#666666" wrapText="true" HBox.hgrow="ALWAYS">
+                                 <font>
+                                    <Font size="12.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </HBox>
+                     </children>
+                  </VBox>
+                  <Button fx:id="fileSendButton" mnemonicParsing="false" onAction="#send" prefHeight="50.0" prefWidth="200.0" styleClass="primary-button" text="Send File">
+                     <VBox.margin>
+                        <Insets top="10.0" />
+                     </VBox.margin>
+                  </Button>
+               </children>
+               <padding>
+                  <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+               </padding>
+            </VBox>
+            <Label fx:id="sendingStatus" alignment="CENTER" prefWidth="600.0" styleClass="status-label" text="" wrapText="true">
+               <font>
+                  <Font size="13.0" />
+               </font>
+            </Label>
+         </children>
+         <padding>
+            <Insets bottom="30.0" left="30.0" right="30.0" top="10.0" />
+         </padding>
+      </VBox>
+   </children>
+</VBox>
