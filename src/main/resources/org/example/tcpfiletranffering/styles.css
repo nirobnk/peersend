@@ -1,0 +1,184 @@
+/* Main Color Scheme */
+.root {
+  -fx-background-color: linear-gradient(
+    to bottom right,
+    #667eea 0%,
+    #764ba2 100%
+  );
+}
+
+/* Title Labels */
+.title {
+  -fx-text-fill: white;
+  -fx-font-size: 32px;
+  -fx-font-weight: bold;
+  -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 10, 0, 0, 2);
+}
+
+.subtitle {
+  -fx-text-fill: rgba(255, 255, 255, 0.9);
+  -fx-font-size: 16px;
+}
+
+/* Primary Button Style */
+.primary-button {
+  -fx-background-color: linear-gradient(to bottom, #4caf50, #45a049);
+  -fx-text-fill: white;
+  -fx-font-size: 16px;
+  -fx-font-weight: bold;
+  -fx-padding: 15 30 15 30;
+  -fx-background-radius: 25;
+  -fx-cursor: hand;
+  -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 8, 0, 0, 3);
+}
+
+.primary-button:hover {
+  -fx-background-color: linear-gradient(to bottom, #5dbf61, #4caf50);
+  -fx-scale-y: 1.05;
+  -fx-scale-x: 1.05;
+}
+
+.primary-button:pressed {
+  -fx-background-color: #3d8b40;
+  -fx-translate-y: 2;
+}
+
+/* Secondary Button Style */
+.secondary-button {
+  -fx-background-color: linear-gradient(to bottom, #2196f3, #1976d2);
+  -fx-text-fill: white;
+  -fx-font-size: 16px;
+  -fx-font-weight: bold;
+  -fx-padding: 15 30 15 30;
+  -fx-background-radius: 25;
+  -fx-cursor: hand;
+  -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 8, 0, 0, 3);
+}
+
+.secondary-button:hover {
+  -fx-background-color: linear-gradient(to bottom, #42a5f5, #2196f3);
+  -fx-scale-y: 1.05;
+  -fx-scale-x: 1.05;
+}
+
+.secondary-button:pressed {
+  -fx-background-color: #1565c0;
+  -fx-translate-y: 2;
+}
+
+/* Action Buttons for Sender/Receiver Selection */
+.action-button {
+  -fx-background-color: white;
+  -fx-text-fill: #667eea;
+  -fx-font-size: 20px;
+  -fx-font-weight: bold;
+  -fx-padding: 30 50 30 50;
+  -fx-background-radius: 15;
+  -fx-cursor: hand;
+  -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.4), 15, 0, 0, 5);
+}
+
+.action-button:hover {
+  -fx-background-color: #f0f0f0;
+  -fx-scale-y: 1.1;
+  -fx-scale-x: 1.1;
+  -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 20, 0, 0, 8);
+}
+
+.action-button:pressed {
+  -fx-background-color: #e0e0e0;
+  -fx-translate-y: 3;
+}
+
+/* Small Button (Back button) */
+.small-button {
+  -fx-background-color: rgba(255, 255, 255, 0.2);
+  -fx-text-fill: white;
+  -fx-font-size: 14px;
+  -fx-font-weight: bold;
+  -fx-padding: 8 16 8 16;
+  -fx-background-radius: 20;
+  -fx-cursor: hand;
+  -fx-border-color: white;
+  -fx-border-radius: 20;
+  -fx-border-width: 2;
+}
+
+.small-button:hover {
+  -fx-background-color: rgba(255, 255, 255, 0.3);
+}
+
+.small-button:pressed {
+  -fx-background-color: rgba(255, 255, 255, 0.4);
+}
+
+/* Choose File Button */
+.choose-button {
+  -fx-background-color: linear-gradient(to bottom, #ff9800, #f57c00);
+  -fx-text-fill: white;
+  -fx-font-size: 14px;
+  -fx-font-weight: bold;
+  -fx-padding: 12 25 12 25;
+  -fx-background-radius: 20;
+  -fx-cursor: hand;
+  -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 5, 0, 0, 2);
+}
+
+.choose-button:hover {
+  -fx-background-color: linear-gradient(to bottom, #ffb74d, #ff9800);
+}
+
+/* Text Field Style */
+.custom-text-field {
+  -fx-background-color: white;
+  -fx-background-radius: 10;
+  -fx-padding: 12;
+  -fx-font-size: 14px;
+  -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0, 0, 2);
+  -fx-border-color: transparent;
+}
+
+.custom-text-field:focused {
+  -fx-border-color: #4caf50;
+  -fx-border-width: 2;
+  -fx-border-radius: 10;
+}
+
+/* Label Styles */
+.field-label {
+  -fx-text-fill: white;
+  -fx-font-size: 14px;
+  -fx-font-weight: bold;
+}
+
+.info-label {
+  -fx-text-fill: rgba(255, 255, 255, 0.95);
+  -fx-font-size: 13px;
+  -fx-background-color: rgba(0, 0, 0, 0.2);
+  -fx-padding: 8;
+  -fx-background-radius: 8;
+}
+
+.status-label {
+  -fx-text-fill: white;
+  -fx-font-size: 14px;
+  -fx-font-weight: bold;
+  -fx-background-color: rgba(0, 0, 0, 0.3);
+  -fx-padding: 10;
+  -fx-background-radius: 8;
+}
+
+/* Card/Panel Style */
+.card {
+  -fx-background-color: rgba(255, 255, 255, 0.95);
+  -fx-background-radius: 20;
+  -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 20, 0, 0, 5);
+  -fx-padding: 30;
+}
+
+/* Header Label */
+.header-label {
+  -fx-text-fill: #667eea;
+  -fx-font-size: 24px;
+  -fx-font-weight: bold;
+}

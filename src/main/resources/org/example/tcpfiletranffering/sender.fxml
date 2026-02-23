@@ -1,24 +1,88 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.tcpfiletranffering.UIcontrollers.ControllerSender">
+<VBox prefHeight="550.0" prefWidth="700.0" styleClass="root" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.tcpfiletranffering.UIcontrollers.ControllerSender">
    <children>
-      <Label layoutX="72.0" layoutY="117.0" text="Receiver's IP" />
-      <TextField fx:id="receiverIP" layoutX="177.0" layoutY="113.0" />
-      <Button fx:id="selectFileButton" layoutX="66.0" layoutY="187.0" mnemonicParsing="false" text="Choose File" />
-      <Label fx:id="selectedFile" layoutX="192.0" layoutY="191.0" maxWidth="-Infinity" text="File" textAlignment="JUSTIFY" wrapText="true" />
-      <Button fx:id="fileSendButton" layoutX="218.0" layoutY="256.0" mnemonicParsing="false" onAction="#send" prefHeight="53.0" prefWidth="163.0" text="Send" />
-      <Label layoutX="72.0" layoutY="48.0" text="Sender">
-         <font>
-            <Font size="14.0" />
-         </font>
-      </Label>
-      <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#goBack" text="&lt;&lt;" />
-      <Label fx:id="sendingStatus" alignment="CENTER" layoutY="340.0" prefHeight="18.0" prefWidth="600.0" text="status" />
+      <HBox alignment="CENTER_LEFT" spacing="10.0">
+         <children>
+            <Button mnemonicParsing="false" onAction="#goBack" styleClass="small-button" text="← Back" />
+         </children>
+         <VBox.margin>
+            <Insets />
+         </VBox.margin>
+         <padding>
+            <Insets bottom="10.0" left="20.0" right="20.0" top="20.0" />
+         </padding>
+      </HBox>
+      <VBox alignment="CENTER" spacing="30.0" VBox.vgrow="ALWAYS">
+         <children>
+            <Label styleClass="title" text="📤 Send File">
+               <font>
+                  <Font name="System Bold" size="32.0" />
+               </font>
+            </Label>
+            <VBox alignment="CENTER" maxWidth="500.0" spacing="25.0" styleClass="card">
+               <children>
+                  <VBox spacing="10.0">
+                     <children>
+                        <Label styleClass="header-label" text="Receiver's IP Address">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="receiverIP" promptText="e.g., 192.168.1.100" styleClass="custom-text-field" />
+                        <Label styleClass="info-label" text="💡 Tip: The receiver should be on the same network" textFill="#666666" wrapText="true">
+                           <font>
+                              <Font size="11.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </VBox>
+                  <VBox spacing="10.0">
+                     <children>
+                        <Label styleClass="header-label" text="Select File">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                        </Label>
+                        <HBox alignment="CENTER_LEFT" spacing="15.0">
+                           <children>
+                              <Button fx:id="selectFileButton" mnemonicParsing="false" styleClass="choose-button" text="Choose File" />
+                              <Label fx:id="selectedFile" maxWidth="300.0" styleClass="info-label" text="No file selected" textFill="#666666" wrapText="true" HBox.hgrow="ALWAYS">
+                                 <font>
+                                    <Font size="12.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </HBox>
+                     </children>
+                  </VBox>
+                  <Button fx:id="fileSendButton" mnemonicParsing="false" onAction="#send" prefHeight="50.0" prefWidth="200.0" styleClass="primary-button" text="Send File">
+                     <VBox.margin>
+                        <Insets top="10.0" />
+                     </VBox.margin>
+                  </Button>
+               </children>
+               <padding>
+                  <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+               </padding>
+            </VBox>
+            <Label fx:id="sendingStatus" alignment="CENTER" prefWidth="600.0" styleClass="status-label" text="" wrapText="true">
+               <font>
+                  <Font size="13.0" />
+               </font>
+            </Label>
+         </children>
+         <padding>
+            <Insets bottom="30.0" left="30.0" right="30.0" top="10.0" />
+         </padding>
+      </VBox>
    </children>
-</AnchorPane>
+</VBox>

@@ -11,7 +11,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.DirectoryChooser;
-import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import org.example.tcpfiletranffering.Main;
 import org.example.tcpfiletranffering.SocketHandling.FTreceiver;
@@ -27,7 +26,6 @@ public class ControllerReceiver implements Initializable {
     private Scene scene;
 
     private String filePath;
-    private String fileName;
 
 
     @FXML
@@ -46,6 +44,7 @@ public class ControllerReceiver implements Initializable {
         selectedLocation.setPrefWidth(400);
         selectedLocation.setMaxWidth(400);
         selectedLocation.setWrapText(true);
+        receivedStatus.setText(""); // Initialize status as empty
     }
 
     public void chooseDestination(ActionEvent event) {
@@ -54,8 +53,10 @@ public class ControllerReceiver implements Initializable {
 
         File file = directoryChooser.showDialog(null);
         if (file != null) {
-            selectedLocation.setText(file.getAbsolutePath()+"\\");
+            selectedLocation.setText(file.getAbsolutePath() + File.separator);
             System.out.println("Selected location: " + file.getAbsolutePath());
+        } else {
+            selectedLocation.setText("No location selected");
         }
     }
 
@@ -70,18 +71,25 @@ public class ControllerReceiver implements Initializable {
 
     public void startConnection(ActionEvent event){
 
-        filePath = selectedLocation.getText()+savingName.getText();
-        if(filePath.isEmpty()){
-            receivedStatus.setText("Please select a destination");
+        if(selectedLocation.getText().isEmpty() || selectedLocation.getText().equals("No location selected")){
+            receivedStatus.setText("❌ Please select a destination folder.");
+            return;
+        }
+        if(savingName.getText().isEmpty()){
+            receivedStatus.setText("❌ Please enter a file name.");
             return;
         }
 
+        filePath = selectedLocation.getText() + savingName.getText();
+        System.out.println("Full file path: " + filePath);
+
         try{
-           receivedStatus.setText("connection started, waiting for file...");
-        FTreceiver.handleReceive(5001,filePath);
-           receivedStatus.setText("File received successfully" );}
-        catch (Exception e){
-            receivedStatus.setText("Error receiving file: " + e.getMessage());
+           receivedStatus.setText("⏳ Waiting for incoming file connection...");
+           FTreceiver.handleReceive(5001,filePath);
+           receivedStatus.setText("✅ File received successfully at: " + filePath);
+        } catch (Exception e){
+            e.printStackTrace();
+            receivedStatus.setText("❌ Error receiving file: " + e.getMessage());
         }
     }
 

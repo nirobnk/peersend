@@ -44,6 +44,7 @@ public class ControllerSender implements Initializable {
         selectedFile.setPrefWidth(400);
         selectedFile.setMaxWidth(400);
         selectedFile.setWrapText(true);
+        sendingStatus.setText(""); // Initialize status as empty
     }
 
     public void chooseFile(ActionEvent event) {
@@ -54,6 +55,8 @@ public class ControllerSender implements Initializable {
         if (file != null) {
                 selectedFile.setText(file.getAbsolutePath());
                 System.out.println("Selected file: " + file.getAbsolutePath());
+        } else {
+                selectedFile.setText("No file selected");
         }
     }
 
@@ -73,19 +76,22 @@ public class ControllerSender implements Initializable {
         filePath = selectedFile.getText();
 
         if(ip.isEmpty()){
-            sendingStatus.setText("Please enter the receiver's IP address.");
+            sendingStatus.setText("❌ Please enter the receiver's IP address.");
             return;
         }
-        if(filePath.isEmpty()){
-            sendingStatus.setText("Please select a file to send.");
+        if(filePath.isEmpty() || filePath.equals("No file selected")){
+            sendingStatus.setText("❌ Please select a file to send.");
             return;
         }
 
         try{
+            sendingStatus.setText("📤 Sending file...");
+            System.out.println("Connecting to: " + ip + ":5001");
             FTsender.handleSend(ip,5001,filePath);
-            sendingStatus.setText("File sent successfully!");
+            sendingStatus.setText("✅ File sent successfully!");
         }catch (Exception e){
-            sendingStatus.setText("Failed to send the file: " + e.getMessage());
+            e.printStackTrace();
+            sendingStatus.setText("❌ Failed to send the file: " + e.getMessage());
         }
 
     }

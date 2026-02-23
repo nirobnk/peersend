@@ -30,15 +30,18 @@ public class FTreceiver {
 
     private static void receiveFile(String fileName) throws Exception{
         int bytes = 0;
+        System.out.println("Saving file to: " + fileName);
         FileOutputStream fileOutputStream = new FileOutputStream(fileName);
 
         long size = dataInputStream.readLong();     // read file size
+        System.out.println("Receiving file of size: " + size + " bytes");
         byte[] buffer = new byte[4*1024];
         while (size > 0 && (bytes = dataInputStream.read(buffer, 0, (int)Math.min(buffer.length, size))) != -1) {
             fileOutputStream.write(buffer,0,bytes);
             size -= bytes;      // read upto file size
         }
         fileOutputStream.close();
+        System.out.println("File saved successfully!");
     }
 
 }

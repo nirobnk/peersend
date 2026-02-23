@@ -28,6 +28,8 @@ public class FTsender {
     private static void sendFile(String path) throws Exception{
         int bytes = 0;
         File file = new File(path);
+        System.out.println("Sending file: " + path);
+        System.out.println("File size: " + file.length() + " bytes");
         FileInputStream fileInputStream = new FileInputStream(file);
 
         // send file size
@@ -39,6 +41,7 @@ public class FTsender {
             dataOutputStream.flush();
         }
         fileInputStream.close();
+        System.out.println("File sent successfully!");
     }
 
 }
